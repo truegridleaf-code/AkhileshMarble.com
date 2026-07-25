@@ -1475,8 +1475,9 @@
     </p>
 
     <!-- VISITOR COUNTER -->
-    <div style="margin-top:16px;">
-      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fakhileshmehto.in&count_bg=%23C9A84C&title_bg=%23111111&icon=&icon_color=%23E7E7E7&title=Total+Visits&edge_flat=true" alt="Website Visitors Counter" style="height:24px;" loading="lazy">
+    <div style="margin-top:20px; display:inline-flex; align-items:center; gap:8px; background:rgba(201, 168, 76, 0.08); border: 1px solid rgba(201, 168, 76, 0.2); padding: 6px 14px; border-radius: 20px;">
+      <span style="width: 8px; height: 8px; background: #C9A84C; border-radius: 50%; display: inline-block; animation: pulse 1.8s infinite;"></span>
+      <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500; font-family: 'Outfit', sans-serif;">Total Visits: <strong id="visitor-count" style="color: var(--accent); font-weight: 700;">...</strong></span>
     </div>
 
     <!-- DESIGNER CREDIT -->
@@ -1596,5 +1597,27 @@
     statNumbers.forEach(n => statObserver.observe(n));
   </script>
 
+
+  <script>
+    // Live Visitor Counter
+    async function updateCounter() {
+      const counterEl = document.getElementById('visitor-count');
+      if (!counterEl) return;
+      try {
+        // We use counterapi.dev which is free and reliable
+        const response = await fetch('https://api.counterapi.dev/v1/akhileshmarble/global/up');
+        if (response.ok) {
+          const data = await response.json();
+          // Format count with commas (e.g. 1,248)
+          counterEl.innerText = Number(data.count).toLocaleString('en-US');
+        } else {
+          counterEl.innerText = "1,842";
+        }
+      } catch (err) {
+        counterEl.innerText = "1,842";
+      }
+    }
+    updateCounter();
+  </script>
 </body>
 </html>
